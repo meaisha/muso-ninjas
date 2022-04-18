@@ -5,9 +5,11 @@
         <img src="@/assets/ninja.png" />
         <router-link :to="{ name: 'home' }">Muso Ninjas</router-link></h1>
       <div class="links">
-        <button @click="handleClick">Logout</button>
-        <router-link class="btn" :to="{ name: 'signup' }">Sign up</router-link>
-        <router-link class="btn" :to="{ name: 'login' }">Log in</router-link>
+        <button v-if="user" @click="handleClick">Logout</button>
+        <span v-else>
+          <router-link class="btn" :to="{ name: 'signup' }">Sign up</router-link>
+          <router-link class="btn" :to="{ name: 'login' }">Log in</router-link>
+        </span>
       </div>
     </nav>
   </div>
@@ -15,17 +17,26 @@
 
 <script>
 import useLogout from '@/composables/useLogout'
+import getUser from '@/composables/getUser'
+import { useRouter } from 'vue-router'
+import {ref} from '@vue/reactivity'
 export default {
   setup() {
     const { error, logout, isPending } = useLogout()
+    const router = useRouter()
+    const { user } = getUser()
+    const isLoggedIn = ref(false)
 
     const handleClick = () => {
       logout()
-      if(!error.value)
+      if(!error.value) {
         console.log('Logged out.')
+        router.push({ name: 'login' })
+      }
+        
     }
 
-    return { error, handleClick, isPending }
+    return { error, handleClick, isPending, user }
   } 
 }
 </script>
