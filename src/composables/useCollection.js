@@ -8,6 +8,7 @@ const useCollection = (collect) => {
   const isPending = ref(false)
 
   const addDocument = async (doc) => {
+    console.log("doc: ", doc)
     error.value = null
     isPending.value = true
 

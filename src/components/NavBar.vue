@@ -3,9 +3,13 @@
     <nav>
       <h1>
         <img src="@/assets/ninja.png" />
-        <router-link :to="{ name: 'home' }">Muso Ninjas</router-link></h1>
+        <router-link :to="{ name: 'home' }">Muso Ninjas</router-link>
+      </h1>
       <div class="links">
-        <button v-if="user" @click="handleClick">Logout</button>
+        <span v-if="user">
+          <router-link :to="{ name: 'create' }">Create Playlist</router-link>
+          <button @click="handleClick">Logout</button>
+        </span>
         <span v-else>
           <router-link class="btn" :to="{ name: 'signup' }">Sign up</router-link>
           <router-link class="btn" :to="{ name: 'login' }">Log in</router-link>
